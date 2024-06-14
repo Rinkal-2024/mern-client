@@ -1,8 +1,10 @@
 
+
 const SingleBook = () => {
+ 
+
   return (
     <div>
-      
     </div>
   )
 }

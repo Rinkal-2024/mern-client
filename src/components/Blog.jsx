@@ -1,10 +1,23 @@
+import { useState } from 'react';
+import { FaRegHeart } from 'react-icons/fa';
 
 const Blog = () => {
+  const [heart, setHeartClick] = useState(false);
+
+  const handleHeartClick = () => {
+    setHeartClick(!heart);
+  };
+
   return (
-    <div>
-      Blog
-    </div>
-  )
+    <>
+    <FaRegHeart className='m-20'
+    onClick={handleHeartClick} 
+    color={heart ? "red" : "blue"}  >
+    
+  </FaRegHeart>
+    
+    </>
+  );
 }
 
-export default Blog
+export default Blog;
