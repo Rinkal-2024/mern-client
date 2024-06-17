@@ -19,7 +19,6 @@ const Banner = () => {
                 </div>
             </div>
 
-
             <div><BannerCard/></div>
         </div>
     </div>

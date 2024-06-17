@@ -4,6 +4,7 @@ import Home from "../home/Home";
 import Shop from "../shop/Shop";
 import About from "../components/About";
 import Blog from "../components/Blog";
+import SingleBook from "../shop/SingleBook";
 
   const router = createBrowserRouter([
     {
@@ -25,8 +26,12 @@ import Blog from "../components/Blog";
         {
           path : '/blog',
           element : <Blog/>
+        },
+        {
+          path : '/book/:id',
+          element : <SingleBook/>,
+          loader :()
         }
-
       ]
     },
   ]);
