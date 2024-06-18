@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react';
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -13,7 +12,7 @@ const BookCards = ({headline,books}) => {
   return (
     <div className='my-16 px-4 lg:px-24'>
         <h2 className='text-5xl text-center font-bold text-black my-5'>{headline}</h2>     
-        <div>
+        <div className="mt-10">
         <Swiper
         slidesPerView={1}
         spaceBetween={10}
@@ -54,11 +53,8 @@ const BookCards = ({headline,books}) => {
                     <p>100/-</p>
                 </div>
                 </Link>
-
-
                 </SwiperSlide>)
-        }
-        
+        }       
       </Swiper>
         </div>
     </div>

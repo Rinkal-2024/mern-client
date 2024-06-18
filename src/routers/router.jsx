@@ -30,11 +30,9 @@ import SingleBook from "../shop/SingleBook";
         {
           path : '/book/:id',
           element : <SingleBook/>,
-          loader :()
+          loader :({params}) => fetch(`http://localhost:5000/book/${params.id}`),
         }
       ]
     },
   ]);
-
-
   export default router;
