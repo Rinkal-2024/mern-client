@@ -1,7 +1,14 @@
 import { Footer } from "flowbite-react";
 import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
+import { useLocation } from "react-router-dom";
 
 const MyFooter = () => {
+const location = useLocation();
+
+  // Conditionally render the Navbar based on the current path
+  if (location.pathname.startsWith('/admin')) {
+    return null; // Don't render Navbar on admin routes
+  }
 
   return (
     <Footer bgDark>
