@@ -5,7 +5,7 @@ import userImg from '../assets/profile.jpg'
 const SideBar = () => {
 
   return (
-    <Sidebar aria-label="Sidebar with content separator example">
+    <Sidebar aria-label="Sidebar with content separator example" className="mt-5">
     <Sidebar.Items>
    
       <Sidebar.ItemGroup>

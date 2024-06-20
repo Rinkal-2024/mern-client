@@ -29,12 +29,14 @@ const UploadBooks = () => {
     }
     console.log(bookObj)
 
-    fetch('http://localhost:5000/upload-book',{
+    fetch('https://mern-server-navy.vercel.app/upload-book',{
         method : 'POST',
         Headers : { 'Content-Type': 'application/json'
        },body : JSON.stringify(bookObj)
     }).then(response => response.json()).then(data => {
       alert('Book uploaded successfully')
+      form.reset();
+      setSelectedBookCategories(bookCategories[0]);
     })
   }
 
