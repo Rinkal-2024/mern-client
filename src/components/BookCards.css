@@ -9,7 +9,6 @@
     font-size: 18px;
     background: #fff;
   
-    /* Center slide text vertically */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,4 +20,7 @@
     height: 100%;
     object-fit: cover;
   }
-  
+  /* styles.css */
+.mySwiper {
+  margin-top: 20px; /* Adjust this value as needed */
+}

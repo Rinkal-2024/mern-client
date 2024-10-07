@@ -10,8 +10,12 @@ import Dashboard from "../dashboard/Dashboard";
 import UploadBooks from "../dashboard/UploadBooks";
 import ManageBooks from "../dashboard/ManageBooks";
 import EditBooks from "../dashboard/EditBooks";
+import Register from "../components/Register";
+import Login from "../components/Login";
+const URL = import.meta.env.VITE_BASE_URL;
 
   const router = createBrowserRouter([
+
     {
       path: "/",
       element:<App />,
@@ -33,9 +37,17 @@ import EditBooks from "../dashboard/EditBooks";
           element : <Blog/>
         },
         {
+          path : '/register',
+          element : <Register/>
+        },
+        {
+          path : '/login',
+          element : <Login/>
+        },
+        {
           path : '/book/:id',
           element : <SingleBook/>,
-          loader :({params}) => fetch(`https://mern-server-navy.vercel.app/book/${params.id}`),
+          loader :({params}) => fetch(`${URL}/book/${params.id}`),
         },
         {
           path:'/',
@@ -56,7 +68,7 @@ import EditBooks from "../dashboard/EditBooks";
             {
               path : '/admin/dashboard/edit-books/:id',
               element : <EditBooks/>,
-              loader :({params}) => fetch(`https://mern-server-navy.vercel.app/book/${params.id}`)
+              loader :({params}) => fetch(`${URL}/book/${params.id}`)
            }
           ]
         }
