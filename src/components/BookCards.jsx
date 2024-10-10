@@ -7,7 +7,6 @@ import './BookCards.css'
 import { FaCartShopping }from 'react-icons/fa6'
 
 const BookCards = ({headline,books}) => {
-    console.log(books);
 
   return (
     <div className='my-16 px-4 lg:px-24'>
@@ -51,6 +50,7 @@ const BookCards = ({headline,books}) => {
                 </div>
                 <div>
                     <p>100/-</p>
+                    
                 </div>
                 </Link>
                 </SwiperSlide>)

@@ -10,8 +10,10 @@ import Dashboard from "../dashboard/Dashboard";
 import UploadBooks from "../dashboard/UploadBooks";
 import ManageBooks from "../dashboard/ManageBooks";
 import EditBooks from "../dashboard/EditBooks";
-import Register from "../components/Register";
 import Login from "../components/Login";
+import Signup from "../components/Signup";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Logout from "../components/Logout";
 const URL = import.meta.env.VITE_BASE_URL;
 
   const router = createBrowserRouter([
@@ -37,12 +39,12 @@ const URL = import.meta.env.VITE_BASE_URL;
           element : <Blog/>
         },
         {
-          path : '/register',
-          element : <Register/>
-        },
+          path : '/sign-up',
+          element :<Signup />
+        },     
         {
-          path : '/login',
-          element : <Login/>
+          path :'/logout',
+          element : <Logout/>
         },
         {
           path : '/book/:id',
@@ -50,12 +52,12 @@ const URL = import.meta.env.VITE_BASE_URL;
           loader :({params}) => fetch(`${URL}/book/${params.id}`),
         },
         {
-          path:'/',
+          path: '/admin/dashboard',
           element: <DashboardLayout />,
           children:[
             {
               path : '/admin/dashboard',
-              element : <Dashboard/>
+              element : <PrivateRoute><Dashboard/></PrivateRoute>
             },
             {
               path : '/admin/dashboard/upload',
@@ -72,7 +74,15 @@ const URL = import.meta.env.VITE_BASE_URL;
            }
           ]
         }
-      ]
+      ],     
+    },
+    {
+      path : 'sign-up',
+      element :<Signup />
+    },
+    {
+      path : '/login',
+      element : <Login/>
     },
   ]);
   export default router;

@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBarsStaggered, FaBlog, FaXmark } from "react-icons/fa6";
 import '../App.css'
+import { AuthContext } from "../contexts/AuthProvider";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setSticky] = useState(false);
   const location = useLocation();
+
+  const {user} = useContext(AuthContext);
+  console.log(user)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -21,7 +25,6 @@ const Navbar = () => {
       }
     };
     window.addEventListener("scroll", handleScroll);
-    // Cleanup function to remove the event listener
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -39,12 +42,12 @@ const Navbar = () => {
 
   const navItem = [
     { link: "Home", path: "/" },
-    { link: "About", path: "/about" },
+    // { link: "About", path: "/about" },
     { link: "Shop", path: "/shop" },
     { link: "Sell Your Book", path: "/admin/dashboard" },
-    { link: "Blog", path: "/blog" },
-    { link: "Register", path: "/register" },
-    { link: "Login", path: "/login" },
+    // { link: "Blog", path: "/blog" },
+    // { link: "Register", path: "/sign-up" },
+    // { link: "Login", path: "/login" },
   ];
 
   return (

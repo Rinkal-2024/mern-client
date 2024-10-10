@@ -60,18 +60,10 @@ function Register() {
 
   return (
     <>
-      <div className="flex h-screen items-center justify-center">
-        <div className=" w-[600px] ">
+      <div className="flex mt-20 items-center justify-center">
+        <div className="w-[600px] ">
           <div className="modal-box">
             <form onSubmit={handleSubmit(onSubmit)} method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <Link
-                to="/"
-                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              >
-                ✕
-              </Link>
-
               <h3 className="font-bold text-lg">Signup</h3>
               <div className="mt-4 space-y-2">
                 <span>Name</span>
@@ -129,18 +121,10 @@ function Register() {
                   Signup
                 </button>
                
-              </div> <p className="text-xl">
+              </div> 
+              <p className="text-xl mt-3">
                   Have account?{" "}
-                  {/* <button
-                    className="underline text-blue-500 cursor-pointer"
-                    onClick={() =>
-                      document.getElementById("my_modal_3").showModal()
-                    }
-                  >
-                    Login
-                  </button>{" "} */}
-                  {/* <Link  className="underline text-blue-500 cursor-pointer" to= '/login'>Login</Link> */}
-                  <Link to="/login">Login</Link>
+                  <Link  className="underline text-blue-500 cursor-pointer" to= '/login'>Login</Link>
 
                   {/* <Login /> */}
                 </p>

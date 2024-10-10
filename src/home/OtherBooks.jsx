@@ -4,9 +4,11 @@ import BookCards from '../components/BookCards';
 const OtherBooks = () => {
   
     const[books , setBooks] = useState([]);
+    const URL = import.meta.env.VITE_BASE_URL;
 
     useEffect(()=>{
-      fetch("https://mern-server-navy.vercel.app/all-books").then(res =>res.json()).then(data =>setBooks(data.slice(5,12)))
+      fetch(`${URL}/all-books`)
+      .then(res =>res.json()).then(data =>setBooks(data.slice(5,12)))
     },[])
 
   return (

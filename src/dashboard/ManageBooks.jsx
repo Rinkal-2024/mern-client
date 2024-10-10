@@ -4,16 +4,16 @@ import {Link} from'react-router-dom';
 
 const ManageBooks = () => {
   const [allBooks, setAllBooks] = useState([]);
-
+  const URL = import.meta.env.VITE_BASE_URL;
   useEffect(() => {
-    fetch('https://mern-server-navy.vercel.app/all-books')
+    fetch(`${URL}/all-books`)
       .then(response => response.json())
       .then(data => setAllBooks(data));
   },[]);
 
   const handleDelete = (id) => {
     console.log(id);
-    fetch(`https://mern-server-navy.vercel.app/book/${id}`,{
+    fetch(`${URL}/book/${id}`,{
       method : 'DELETE',
     }).then(response => response.json()).then(data =>{
       alert('Book deleted successfully')

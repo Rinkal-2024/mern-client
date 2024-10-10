@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Checkbox, Label, TextInput, Textarea } from "flowbite-react";
+import { Button, Label, TextInput, Textarea } from "flowbite-react";
 
 const UploadBooks = () => {
   const bookCategories = [
@@ -11,7 +11,7 @@ const UploadBooks = () => {
   const [selectedBookCategories, setSelectedBookCategories] = useState(bookCategories[0]);
 
   const handleChangeSelectedValues = (event) => {
-    console.log(event.target.value);
+    setSelectedBookCategories(event.target.value);
   }
 
   const handleSubmit = (event) => {
@@ -25,20 +25,29 @@ const UploadBooks = () => {
     const bookPDFURL = form.bookPDFURL.value;
 
     const bookObj = {
-      bookTitle ,authorName, imageURL, category, bookDescription, bookPDFURL
-    }
+        bookTitle,authorName, imageURL, category, bookDescription, bookPDFURL
+    };
     console.log(bookObj)
 
-    fetch('https://mern-server-navy.vercel.app/upload-book',{
-        method : 'POST',
-        Headers : { 'Content-Type': 'application/json'
-       },body : JSON.stringify(bookObj)
-    }).then(response => response.json()).then(data => {
-      alert('Book uploaded successfully')
-      form.reset();
-      setSelectedBookCategories(bookCategories[0]);
+    const URL = import.meta.env.VITE_BASE_URL;
+
+    fetch(`${URL}/upload-book`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookObj)
     })
-  }
+    .then(response => response.json())
+    .then(data => {
+        console.log('Response data:', data); 
+        if (data.insertedId) {
+            alert('Book uploaded successfully');
+            form.reset();
+            setSelectedBookCategories(bookCategories[0]);
+        } else {
+            alert('Error uploading book');
+        }
+    })
+};
 
   return (
     <div className='px-4 my-12'>
@@ -76,7 +85,9 @@ const UploadBooks = () => {
             <select id="inputState" name="categoryName" className='w-full rounded' value={selectedBookCategories}
               onChange={handleChangeSelectedValues}>
               {
-                bookCategories.map((option) => <option key={option} value={option}>{option}</option>)
+                bookCategories.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))
               }
             </select>
           </div>

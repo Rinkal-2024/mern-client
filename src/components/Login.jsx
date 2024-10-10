@@ -1,111 +1,101 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import toast from "react-hot-toast";
-function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
+import googleLogo from "../assets/google-logo.svg";
 
-  const onSubmit = async (data) => {
-    const userInfo = {
-      email: data.email,
-      password: data.password,
-    };
-    await axios
-      .post("http://localhost:5000/user/login", userInfo)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-          toast.success("Loggedin Successfully");
-          document.getElementById("my_modal_3").close();
-          setTimeout(() => {
-            window.location.reload();
-            localStorage.setItem("Users", JSON.stringify(res.data.user));
-          }, 1000);
-        }
+const Signup = () => {
+  const { createdUser, loginwithGoogle, login } = useContext(AuthContext);
+  const [error, setError] = useState('');
+  const loaction = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/";
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    login(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        alert("Login successfull!");
+        navigate(from, { replace: true });
       })
-      .catch((err) => {
-        if (err.response) {
-          console.log(err);
-          toast.error("Error: " + err.response.data.message);
-          setTimeout(() => {}, 2000);
-        }
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError(errorMessage);
       });
   };
+
+  const handleRegister = () => {
+    loginwithGoogle().then((result) => {
+      const user = result.user;
+      navigate(from, { replace: true });
+    });
+  };
   return (
-    <div>
-      <dialog id="my_modal_3" className="modal">
-        <div className="modal-box">
-          <form onSubmit={handleSubmit(onSubmit)} method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <Link
-              to="/"
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-              onClick={() => document.getElementById("my_modal_3").close()}
-            >
-              ✕
-            </Link>
-
-            <h3 className="font-bold text-lg">Login</h3>
-            {/* Email */}
-            <div className="mt-4 space-y-2">
-              <span>Email</span>
-              <br />
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-80 px-3 py-1 border rounded-md outline-none"
-                {...register("email", { required: true })}
-              />
-              <br />
-              {errors.email && (
-                <span className="text-sm text-red-500">
-                  This field is required
-                </span>
-              )}
+    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+          <div className="max-w-md mx-auto">
+            <div>
+              <h1 className="text-2xl font-semibold">Login </h1>
             </div>
-            {/* password */}
-            <div className="mt-4 space-y-2">
-              <span>Password</span>
-              <br />
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="w-80 px-3 py-1 border rounded-md outline-none"
-                {...register("password", { required: true })}
-              />
-              <br />
-              {errors.password && (
-                <span className="text-sm text-red-500">
-                  This field is required
-                </span>
-              )}
+            <div className="divide-y divide-gray-200">
+              <form
+                className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
+                onSubmit={handleLogin}
+              >
+                <div className="relative">
+                  <input
+                    id="email"
+                    name="email"
+                    type="text"
+                    className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                    placeholder="Email address"
+                    required
+                  />
+                </div>
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+				{error ? <p className="text-red-600 text-base">E-mail or password is not correct</p>:""}
+                <p>
+                  If you haven't an account. Please{" "}
+                  <Link to="/sign-up" className="text-blue-600 underline">
+                    register
+                  </Link>
+                </p>
+                <div className="relative">
+                  <button className="bg-blue-500 text-white rounded-md px-6 py-1">
+                    Login
+                  </button>
+                </div>
+              </form>
             </div>
-
-            {/* Button */}
-            <div className="flex justify-around mt-6">
-              <button className="bg-pink-500 text-white rounded-md px-3 py-1 hover:bg-pink-700 duration-200">
-                Login
+            <hr />
+            <div className="flex w-full items-center flex-col mt-5 gap-3">
+              <button onClick={handleRegister} className="block">
+                <img src={googleLogo} className="w-12 h-12 inline-block" />
+                Login with Google
               </button>
-              <p>
-                Not registered?{" "}
-                <Link
-                  to="/signup"
-                  className="underline text-blue-500 cursor-pointer"
-                >
-                  Signup
-                </Link>{" "}
-              </p>
             </div>
-          </form>
+          </div>
         </div>
-      </dialog>
+      </div>
     </div>
   );
-}
+};
 
-export default Login;
+export default Signup;
